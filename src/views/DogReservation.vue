@@ -1,5 +1,5 @@
 <template>
-  <div class="Login">
+  <div class="Make Reservation">
     <input placeholder="kasutaja nimi" v-model="username">
     <input placeholder="parool" v-model="password">
     <button v-on:click="login"> Sisesta</button>

@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/">Login</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Kodu</router-link> |
+      <router-link to="/login">Logi sisse</router-link> |
+      <router-link to="/bronn">Broneeri aeg</router-link> |
+      <router-link to="/about">Meist</router-link>
     </nav>
     <router-view/>
   </div>
