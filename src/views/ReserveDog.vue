@@ -43,11 +43,28 @@
       Jalutuskäik lõpeb <input disabled v-model="requiredEndTime">
       <br>
       <br>
-      User Id <input disabled v-model="userId">
+      Konto ID <input disabled v-model="userId">
       <br>
       <br>
 
       <button v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
+
+    </div>
+
+    <div v-if="displayReservationConfirmation">
+
+      <h2>Broneeringu kinnitus </h2>
+      <br>
+      <br>
+      Hea {{firstName}}!
+      <br>
+      <br>
+      {{ dog.dogName }} ootab sind jalutama {{requiredDate}} kell {{requiredStartTime}}. Head jalutamist!
+      <br>
+      <br>
+      {{reservationNumber}}
+      <br>
+      <br>
 
     </div>
 
@@ -65,13 +82,14 @@ export default {
       dogs: {},
       dog: {},
       user: {},
-      displayMainView: true,
-      displayDogAvailability: false,
       dogName: "",
       dogId: "",
       reservationNumber: "",
       userId: this.$route.query.userIdParam,
-      firstName: this.$route.query.firstNameParam
+      firstName: this.$route.query.firstNameParam,
+      displayMainView: true,
+      displayDogAvailability: false,
+      displayReservationConfirmation: false
 
     }
   },
@@ -110,9 +128,10 @@ export default {
       }
       this.$http.post("/reserve/dog", request
       ).then(response => {
-        this.displayDogAvailability(this.dogId)
-        alert("Koer jalutamiseks broneeritud.")
-        this.displayMainViewDiv()
+        alert("Koer jalutamiseks broneeritud." + response.data.reservationNumber)
+        this.reservationNumber = response.data.reservationNumber
+        this.hideAllDivs()
+        this.displayReservationConfirmation = true
         this.dogs = response.data
         console.log(response.data)
       }).catch(error => {

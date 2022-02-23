@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <h1>MILJON MUKIT MTÜ</h1>
+    <img alt="Cocker spaniel" src="https://www.pdsa.org.uk/media/8262/cocker-spaniel-looking-at-camera-min.jpg">
+    <HelloWorld msg="Tule meie koertega jalutama"/>
   </div>
 </template>
 
