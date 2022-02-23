@@ -12,7 +12,9 @@ export default {
   data: function () {
     return {
       username: "",
-      password: ""
+      password: "",
+      inputFirstName: "Nonii",
+      inputUserId: "6666"
     }
   },
   methods: {
@@ -20,18 +22,32 @@ export default {
       let request = {
         userName: this.username,
         password: this.password
+
       }
       this.$http.post("/user/login", request)
           .then(response => {
             alert("Tere tulemast " + response.data.firstName + " " + response.data.lastName)
             console.log(response.data)
+            this.inputFirstName = response.data.firstName
+            this.inputUserId = response.data.userId
+            this.getNameAndRedirectToReserveDogPage()
           })
           .catch(error => {
             alert(error.response.data.message + " Error code: " + error.response.data.errorCode)
             console.log(error)
           })
+    },
+
+    getNameAndRedirectToReserveDogPage: function(){
+      this.$router.push({name: 'ReserveDog',
+        query: {firstNameParam: this.inputFirstName, userIdParam: this.inputUserId}});
     }
-  }
+
+  },
+
+  mounted() {
+
+  },
 
 }
 </script>

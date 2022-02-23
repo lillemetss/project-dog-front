@@ -41,7 +41,10 @@
       Jalutuskäik lõpeb <input disabled v-model="requiredEndTime">
       <br>
       <br>
-      User ID <input disabled v-model="userId">
+      Eesnimi <input disabled v-model="firstName">
+      <br>
+      <br>
+      User Id <input disabled v-model="userId">
       <br>
       <br>
 <!--      Kasutaja ID <input v-model="userId">-->
@@ -63,12 +66,15 @@ export default {
       requiredEndTime: "",
       dogs: {},
       dog: {},
+      user: {},
       displayMainView: true,
       displayDogAvailability: false,
       dogName: "",
       dogId: "",
-      userId: "",
-      reservationNumber: ""
+      reservationNumber: "",
+      userId: this.$route.query.userIdParam,
+      firstName: this.$route.query.firstNameParam
+
     }
   },
   methods: {
@@ -76,7 +82,7 @@ export default {
       let request = {
         requiredDate: this.requiredDate,
         requiredStartTime: this.requiredStartTime,
-        requiredEndTime: this.requiredEndTime
+        requiredEndTime: this.requiredEndTime,
       }
       this.$http.post("/time/date", request)
           .then(response => {
@@ -103,7 +109,7 @@ export default {
         requiredStartTime: this.requiredStartTime,
         requiredEndTime: this.requiredEndTime,
         dogId: this.dog.dogId,
-        userId: this.user.userId
+        userId: this.userId
       }
       this.$http.post("/reserve/dog", request
       ).then(response => {
@@ -118,7 +124,6 @@ export default {
       })
 
     },
-
 
     displayMainViewDiv: function () {
       this.displayMainView = true
