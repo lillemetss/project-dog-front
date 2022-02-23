@@ -1,5 +1,7 @@
 <template>
   <div class="Login">
+
+    <h3>Logi sisse:</h3>
     <input placeholder="kasutaja nimi" v-model="username">
     <input placeholder="parool" v-model="password">
     <button v-on:click="login"> Sisesta</button>

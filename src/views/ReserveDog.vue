@@ -1,8 +1,10 @@
 <template>
   <div class="ReserveDog">
     <div v-if="displayMainView">
-      <h1> Broneeri aeg! </h1>
-      <input placeholder="Vali kuupäev" v-model="requiredDate">
+
+      <h3>Tere, {{ this.firstName }}!</h3>
+      <h3> Siit saad broneerida aja koeraga jalutamiseks: </h3>
+      <input type=date placeholder="Vali kuupäev" v-model="requiredDate">
       <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
       <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
       <button v-on:click="dogAvailability">Otsi vabu koeri</button>
@@ -41,13 +43,9 @@
       Jalutuskäik lõpeb <input disabled v-model="requiredEndTime">
       <br>
       <br>
-      Eesnimi <input disabled v-model="firstName">
-      <br>
-      <br>
       User Id <input disabled v-model="userId">
       <br>
       <br>
-<!--      Kasutaja ID <input v-model="userId">-->
 
       <button v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
 
@@ -88,7 +86,6 @@ export default {
           .then(response => {
             this.dogs = response.data
             this.displayMainViewDiv()
-            alert("Edukalt borneeritud koer " + response.data.dogName + " " + response.data.dogDescription)
             console.log(response.data)
           })
           .catch(error => {
@@ -114,9 +111,9 @@ export default {
       this.$http.post("/reserve/dog", request
       ).then(response => {
         this.displayDogAvailability(this.dogId)
-        this.displayMainViewDiv()
         alert("Koer jalutamiseks broneeritud.")
-
+        this.displayMainViewDiv()
+        this.dogs = response.data
         console.log(response.data)
       }).catch(error => {
         alert(error.response.data.message)
