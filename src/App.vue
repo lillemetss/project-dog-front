@@ -3,37 +3,18 @@
     <nav>
       <router-link to="/">Kodu</router-link>
       |
-      <router-link to="/login">Logi sisse</router-link>
+      <router-link to="/login">Minu konto</router-link>
       |
-      <router-link to="/bronn">Broneeri aeg</router-link>
-      |
+<!--      <router-link to="/bronn">Broneeri aeg</router-link>-->
+<!--      |-->
       <router-link to="/about">Meist</router-link>
     </nav>
     <router-view/>
 
-<!--    <div>-->
-<!--      <CalendarWidget/>-->
-<!--    </div>-->
+
   </div>
 </template>
 
-
-<!--<script>-->
-<!--import CalendarWidget from "@/components/CalendarWidget";-->
-
-<!--export default {-->
-<!--  name: 'App',-->
-<!--  components: {-->
-<!--    CalendarWidget-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-<!--<style scoped>-->
-<!--.container {-->
-<!--  max-width: 300px;-->
-<!--}-->
-
-<!--</style>-->
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -56,10 +37,3 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
-<script>
-import CalendarWidget from "@/components/CalendarWidget";
-
-export default {
-  components: {CalendarWidget}
-}
-</script>

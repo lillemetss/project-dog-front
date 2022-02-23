@@ -1,8 +1,9 @@
 <template>
   <div class="ReserveDog">
     <div v-if="displayMainView">
-      <h1> Broneeri aeg! </h1>
-      <input placeholder="Vali kuupäev" v-model="requiredDate">
+      <h3>Tere, {{ this.firstName }}!</h3>
+      <h3> Broneeri aeg: </h3>
+      <input type=date placeholder="Vali kuupäev" v-model="requiredDate">
       <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
       <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
       <button v-on:click="dogAvailability">Otsi vabu koeri</button>
@@ -41,13 +42,9 @@
       Jalutuskäik lõpeb <input disabled v-model="requiredEndTime">
       <br>
       <br>
-      Eesnimi <input disabled v-model="firstName">
+      Konto ID <input disabled v-model="userId">
       <br>
       <br>
-      User Id <input disabled v-model="userId">
-      <br>
-      <br>
-<!--      Kasutaja ID <input v-model="userId">-->
 
       <button v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
 
@@ -88,7 +85,6 @@ export default {
           .then(response => {
             this.dogs = response.data
             this.displayMainViewDiv()
-            alert("Edukalt borneeritud koer " + response.data.dogName + " " + response.data.dogDescription)
             console.log(response.data)
           })
           .catch(error => {
@@ -113,26 +109,24 @@ export default {
       }
       this.$http.post("/reserve/dog", request
       ).then(response => {
-        this.displayDogAvailability(this.dogId)
-        this.displayMainViewDiv()
-        alert("Koer jalutamiseks broneeritud.")
-
+        alert(response.data.reservationNumber)
         console.log(response.data)
       }).catch(error => {
-        alert(error.response.data.message)
+        alert(error.response.data.message + " Error code: " + error.response.data.errorCode)
         console.log(error)
       })
 
     },
-
     displayMainViewDiv: function () {
       this.displayMainView = true
       this.displayDogAvailability = false
-    },
 
+    },
     hideAllDivs: function () {
       this.displayMainView = false
       this.displayDogAvailability = false
+
+
 
     }
   }
