@@ -13,8 +13,8 @@ export default {
     return {
       username: "",
       password: "",
-      inputFirstName: "Nonii",
-      inputUserId: "6666"
+      inputFirstName: "",
+      inputUserId: ""
     }
   },
   methods: {
