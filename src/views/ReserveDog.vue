@@ -2,19 +2,28 @@
   <div class="ReserveDog">
     <div v-if="displayMainView">
 
-      <h3>Tere, {{ this.firstName }}!</h3>
-      <h3> Siit saad broneerida aja koeraga jalutamiseks: </h3>
-      <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
+      <button v-on:click="logOut">Logi välja</button>
 
+      <div class="ReservationSearch">
 
-      <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
-      <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
-      <button v-on:click="dogAvailability">Otsi vabu koeri</button>
-
-      <table v-if="dogs.length > 0">
+        <br>
+        <br>
+        <img alt="Doggo" src="https://www.pdsa.org.uk/media/6959/gallery-3-basset-hound-close-up-min.jpg?anchor=center&mode=crop&quality=100&height=500&bgcolor=fff&rnd=132067288640000000">
+        <br>
+        <br>
+        <h3>Tere, {{ this.firstName }}!</h3>
+        <h3> Siit saad broneerida aja koeraga jalutamiseks: </h3>
+        <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
+        <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
+        <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
+        <button v-on:click="dogAvailability">Otsi vabu koeri</button>
+        <br>
+        <br>
+      <table align="center" v-if="dogs.length > 0">
         <tr>
           <th>Koera nimi</th>
           <th>Kirjeldus</th>
+          <th>Broneeri</th>
           <th></th>
         </tr>
         <tr v-for="row in dogs">
@@ -26,6 +35,7 @@
 
         </tr>
       </table>
+      </div>
     </div>
 
     <div v-if="displayDogAvailability">
@@ -62,18 +72,20 @@
 
     <div v-if="displayReservationConfirmation">
 
+
       <h2>Broneeringu kinnitus </h2>
       <br>
       <br>
-      Hea {{firstName}}!
+      Hea {{ firstName }}!
       <br>
       <br>
-      {{ dog.dogName }} ootab sind jalutama {{requiredDate}} kell {{requiredStartTime}}. Head jalutamist!
+      {{ dog.dogName }} ootab sind jalutama {{ requiredDate }} kell {{ requiredStartTime }}. Head jalutamist!
       <br>
       <br>
-      {{reservationNumber}}
+      {{ reservationNumber }}
       <br>
       <br>
+      <button v-on:click="logOut">Logi välja</button>
 
     </div>
 
@@ -159,9 +171,14 @@ export default {
       this.displayMainView = false
       this.displayDogAvailability = false
 
-    }
-  }
+    },
 
+    logOut: function () {
+      sessionStorage.clear()
+      this.$router.push({name: 'Login'})
+    },
+
+  }
 
 
 }

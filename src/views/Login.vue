@@ -35,7 +35,6 @@ export default {
       let request = {
         userName: this.username,
         password: this.password
-
       }
       this.$http.post("/user/login", request)
           .then(response => {
