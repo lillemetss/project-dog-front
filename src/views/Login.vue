@@ -2,9 +2,10 @@
   <div class="Login">
 
     <h3>Logi sisse:</h3>
-    <input placeholder="kasutaja nimi" v-model="username">
-    <input placeholder="parool" v-model="password">
+    <input placeholder="Kasutajanimi" v-model="username">
+    <input type=password placeholder="Parool" v-model="password">
     <button v-on:click="login"> Sisesta</button>
+
   </div>
 </template>
 
@@ -19,6 +20,16 @@ export default {
       inputUserId: ""
     }
   },
+
+  beforeMount(){
+    if (sessionStorage.getItem('userId') !== null) {
+      this.$router.push({
+        name: 'ReserveDog',
+        query: {firstNameParam: sessionStorage.getItem('firstName'), userIdParam: sessionStorage.getItem('userId')}
+      });
+    }
+  },
+
   methods: {
     login: function () {
       let request = {
@@ -33,6 +44,7 @@ export default {
             this.inputFirstName = response.data.firstName
             this.inputUserId = response.data.userId
             this.getNameAndRedirectToReserveDogPage()
+            this.saveDataToSessionStorage()
           })
           .catch(error => {
             alert(error.response.data.message + " Error code: " + error.response.data.errorCode)
@@ -40,19 +52,26 @@ export default {
           })
     },
 
-    getNameAndRedirectToReserveDogPage: function(){
-      this.$router.push({name: 'ReserveDog',
-        query: {firstNameParam: this.inputFirstName, userIdParam: this.inputUserId}});
+    saveDataToSessionStorage: function (){
+      sessionStorage.setItem('userName', this.username)
+      sessionStorage.setItem('password', this.password)
+      sessionStorage.setItem('firstName', this.inputFirstName)
+      sessionStorage.setItem('userId', this.inputUserId)
+    },
+
+
+    getNameAndRedirectToReserveDogPage: function () {
+      this.$router.push({
+        name: 'ReserveDog',
+        query: {firstNameParam: sessionStorage.getItem('firstName'), userIdParam: sessionStorage.getItem('userId')}
+      });
     }
-
-  },
-
-  mounted() {
 
   },
 
 }
 </script>
+
 
 <style scoped>
 

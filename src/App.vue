@@ -6,7 +6,7 @@
       <router-link to="/login">Minu konto</router-link>
       |
 <!--      <router-link to="/bronn">Broneeri aeg</router-link>-->
-      |
+<!--      |-->
       <router-link to="/about">Meist</router-link>
       |
     </nav>

@@ -4,7 +4,9 @@
 
       <h3>Tere, {{ this.firstName }}!</h3>
       <h3> Siit saad broneerida aja koeraga jalutamiseks: </h3>
-      <input type=date placeholder="Vali kuupäev" v-model="requiredDate">
+      <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
+
+
       <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
       <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
       <button v-on:click="dogAvailability">Otsi vabu koeri</button>
@@ -49,6 +51,13 @@
 
       <button v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
 
+    </div>
+
+    <br>
+    <br>
+
+    <div v-if="displayDogAvailability">
+      <button v-on:click="displayMainViewDiv">Tagasi...</button>
     </div>
 
     <div v-if="displayReservationConfirmation">
@@ -152,6 +161,8 @@ export default {
 
     }
   }
+
+
 
 }
 </script>

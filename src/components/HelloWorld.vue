@@ -2,13 +2,11 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>
-
-      <a href="https://www.doggiedrawings.net/dow" target="_blank" rel="noopener">Joonistused maailma erinevatest koertest</a>
+    <p>Miljon Mukit MTÜ, registrikood 80006666</p>
+      <p>Uus 12, Tallinn, 10111</p>
+      <p> Meiega saad kontakti läbi muki@miljon.mukit</p>
+    <p><a href="https://goo.gl/maps/tW68aPZGmBAdvg7eA" target="blank" rel="noopener">Leia meid kaardilt</a>
     </p>
-    <p>Miljon Mukit MTÜ, registrikood 80006666 </p>
-    <p>Uus 12, Tallinn, 10111 </p>
-    <p>Meiega saad kontakti läbi muki@miljon.mukit</p>
-    <a href="https://goo.gl/maps/tW68aPZGmBAdvg7eA" target="blank" rel="noopener">Leia meid kaardilt</a>
     <ul>
     </ul>
 
