@@ -4,7 +4,7 @@
     <h3>Logi sisse:</h3>
     <input placeholder="Kasutajanimi" v-model="username">
     <input type=password placeholder="Parool" v-model="password">
-    <button v-on:click="login"> Sisesta</button>
+    <button type="button" class="btn btn-outline-dark" v-on:click="login"> Sisesta</button>
 
   </div>
 </template>

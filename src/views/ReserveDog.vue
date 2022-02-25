@@ -8,7 +8,7 @@
 
         <br>
         <br>
-        <img alt="Doggo" src="https://www.pdsa.org.uk/media/6959/gallery-3-basset-hound-close-up-min.jpg?anchor=center&mode=crop&quality=100&height=500&bgcolor=fff&rnd=132067288640000000">
+        <img alt="Doggo" src="https://www.pdsa.org.uk/media/7707/beagle-page-image-2-min.jpg" class="img-fluid">
         <br>
         <br>
         <h3>Tere, {{ this.firstName }}!</h3>
@@ -19,22 +19,26 @@
         <button v-on:click="dogAvailability">Otsi vabu koeri</button>
         <br>
         <br>
-      <table align="center" v-if="dogs.length > 0">
-        <tr>
-          <th>Koera nimi</th>
-          <th>Kirjeldus</th>
-          <th>Broneeri</th>
-          <th></th>
-        </tr>
-        <tr v-for="row in dogs">
-          <td>{{ row.dogName }}</td>
-          <td>{{ row.dogDescription }}</td>
-          <td>
-            <button v-on:click="selectDog(row)">vali mind</button>
-          </td>
+        <table class="table table-hover" v-if="dogs.length > 0">
+          <thead>
+          <tr>
+            <th scope="col">Koera nimi</th>
+            <th scope="col">Kirjeldus</th>
+            <th scope="col">Broneeri</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="row in dogs">
+            <th scope="row"></th>
+            <td>{{ row.dogName }}</td>
+            <td>{{ row.dogDescription }}</td>
+            <td>
+              <button v-on:click="selectDog(row)">vali mind</button>
+            </td>
 
-        </tr>
-      </table>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -89,6 +93,9 @@
 
     </div>
 
+    <div>
+    </div>
+
   </div>
 </template>
 
@@ -106,11 +113,12 @@ export default {
       dogName: "",
       dogId: "",
       reservationNumber: "",
-      userId: this.$route.query.userIdParam,
-      firstName: this.$route.query.firstNameParam,
+      userId: sessionStorage.getItem('userId'),
+      firstName: sessionStorage.getItem('firstName'),
       displayMainView: true,
       displayDogAvailability: false,
-      displayReservationConfirmation: false
+      displayReservationConfirmation: false,
+      displayAllUserReservations: false
 
     }
   },
@@ -178,6 +186,21 @@ export default {
       this.$router.push({name: 'Login'})
     },
 
+  },
+
+  displayAllUserReservations: function () {
+    this.$http.get("/reserve/history", {
+          params: {
+            userId: this.userId
+          }
+        }
+    ).then(response => {
+      this.reservations = response.data
+      this.hideAllDivs()
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
 
