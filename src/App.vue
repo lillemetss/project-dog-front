@@ -8,9 +8,9 @@
 <!--      <router-link to="/bronn">Broneeri aeg</router-link>-->
 <!--      |-->
       <router-link to="/about">Meist</router-link>
+      |
     </nav>
     <router-view/>
-
 
   </div>
 </template>
@@ -22,6 +22,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: mistyrose;
 }
 
 nav {
@@ -34,6 +35,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #660000;
 }
 </style>
