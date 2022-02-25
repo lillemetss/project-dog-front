@@ -3,7 +3,7 @@
     <div v-if="displayMainView">
       <h3>Tere, {{ this.firstName }}!</h3>
       <h3> Broneeri aeg: </h3>
-      <input type=date placeholder="Vali kuupäev" v-model="requiredDate">
+      <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
       <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
       <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
       <button v-on:click="dogAvailability">Otsi vabu koeri</button>
@@ -47,7 +47,17 @@
       <br>
 
       <button v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
-
+      <br>
+      <div v-if="displayDogAvailability">
+      <button v-on:click="displayMainViewDiv">Tagasi</button>
+    </div>
+    </div>
+    <div v-if="displayReservationConfirmation">
+      Hea {{firstName}}!
+      <br>
+     {{dog.dogName}} ootab Teid jalutama {{requiredDate}} kell {{requiredStartTime}}. Head jalutust!
+      <br>
+      Broneerigu number: {{reservationNumber}}.
     </div>
 
   </div>
@@ -58,7 +68,7 @@ export default {
   name: "ReserveDog",
   data: function () {
     return {
-      requiredDate: "yyyy-mm-dd",
+      requiredDate: "",
       requiredStartTime: "",
       requiredEndTime: "",
       dogs: {},
@@ -66,6 +76,7 @@ export default {
       user: {},
       displayMainView: true,
       displayDogAvailability: false,
+      displayReservationConfirmation: false,
       dogName: "",
       dogId: "",
       reservationNumber: "",
@@ -109,7 +120,10 @@ export default {
       }
       this.$http.post("/reserve/dog", request
       ).then(response => {
-        alert(response.data.reservationNumber)
+        alert(" Koer edukalt broneeritud! " +response.data.reservationNumber)
+        this.reservationNumber=response.data.reservationNumber
+        this.hideAllDivs()
+        this.displayReservationConfirmation = true
         console.log(response.data)
       }).catch(error => {
         alert(error.response.data.message + " Error code: " + error.response.data.errorCode)
@@ -125,8 +139,6 @@ export default {
     hideAllDivs: function () {
       this.displayMainView = false
       this.displayDogAvailability = false
-
-
 
     }
   }
