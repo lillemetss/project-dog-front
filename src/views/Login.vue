@@ -1,10 +1,13 @@
 <template>
   <div class="Login">
 
-    <h3>Logi sisse:</h3>
+    <h3>Logi sisse</h3>
+    <br>
     <input placeholder="Kasutajanimi" v-model="username">
     <input type=password placeholder="Parool" v-model="password">
-    <button v-on:click="login"> Sisesta</button>
+    <br>
+    <br>
+    <button type="button" class="btn btn-outline-primary" v-on:click="login"> Sisesta</button>
 
   </div>
 </template>
@@ -21,7 +24,7 @@ export default {
     }
   },
 
-  beforeMount(){
+  beforeMount() {
     if (sessionStorage.getItem('userId') !== null) {
       this.$router.push({
         name: 'ReserveDog',
@@ -35,7 +38,6 @@ export default {
       let request = {
         userName: this.username,
         password: this.password
-
       }
       this.$http.post("/user/login", request)
           .then(response => {
@@ -52,7 +54,7 @@ export default {
           })
     },
 
-    saveDataToSessionStorage: function (){
+    saveDataToSessionStorage: function () {
       sessionStorage.setItem('userName', this.username)
       sessionStorage.setItem('password', this.password)
       sessionStorage.setItem('firstName', this.inputFirstName)
