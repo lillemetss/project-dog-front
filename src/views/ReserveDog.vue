@@ -1,48 +1,59 @@
 <template>
   <div class="ReserveDog">
     <div v-if="displayMainView">
-
-      <button v-on:click="logOut">Logi välja</button>
-
-      <div class="ReservationSearch">
-
-        <br>
-        <br>
-        <img alt="Doggo" src="https://www.pdsa.org.uk/media/7707/beagle-page-image-2-min.jpg" class="img-fluid">
-        <br>
-        <br>
-        <h3>Tere, {{ this.firstName }}!</h3>
-        <h3> Siit saad broneerida aja koeraga jalutamiseks: </h3>
-        <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
-        <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
-        <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
-        <button v-on:click="dogAvailability">Otsi vabu koeri</button>
-        <br>
-        <br>
-        <table class="table table-hover" v-if="dogs.length > 0">
-          <thead>
-          <tr>
-            <th scope="col">Koera nimi</th>
-            <th scope="col">Kirjeldus</th>
-            <th scope="col">Broneeri</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="row in dogs">
-            <th scope="row"></th>
-            <td>{{ row.dogName }}</td>
-            <td>{{ row.dogDescription }}</td>
-            <td>
-              <button v-on:click="selectDog(row)">vali mind</button>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
-      </div>
+      <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="logOut">Logi välja</button>
+      <br>
+      <br>
+      <h3>Tere {{ firstName }}!</h3>
+      <img alt="Doggo" src="https://www.pdsa.org.uk/media/7707/beagle-page-image-2-min.jpg" class="img-fluid">
+      <br>
+      <br>
+      <button type="button" class="btn btn-secondary" v-on:click="displayDogsSearchDiv">Broneeri uus jalutuskäik
+      </button>
+      <br>
+      <br>
+      <button type="button" class="btn btn-secondary" v-on:click="getAllUserReservations">Minu jalutuskäigud
+      </button>
     </div>
 
-    <div v-if="displayDogAvailability">
+    <div v-if="displayDogSearch">
+
+      <br>
+      <h3> Siin saad broneerida uue aja koeraga jalutamiseks: </h3>
+      <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
+      <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
+      <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
+      <br>
+      <br>
+      <button type="button" class="btn btn-secondary" v-on:click="dogAvailability">Otsi vabu koeri</button>
+    </div>
+
+    <div v-if="displayDogSearchResults">
+
+      <br>
+      <br>
+      <table class="table table-hover" v-if="dogs.length > 0">
+        <thead>
+        <tr>
+          <th scope="col">Koera nimi</th>
+          <th scope="col">Kirjeldus</th>
+          <th scope="col">Broneeri</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="row in dogs">
+          <td>{{ row.dogName }}</td>
+          <td>{{ row.dogDescription }}</td>
+          <td>
+            <button type="button" class="btn btn-success" v-on:click="selectDog(row)">vali mind</button>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div v-if="displaySelectedDogData">
 
       Koera ID <input disabled v-model="dog.dogId">
       <br>
@@ -63,15 +74,12 @@
       <br>
       <br>
 
-      <button v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
+      <button type="button" class="btn btn-success" v-on:click="reserveDog">Kinnita jalutuskäigu broneering</button>
+      <br>
+      <br>
+      <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="displayMainViewDiv">Tagasi...</button>
 
-    </div>
 
-    <br>
-    <br>
-
-    <div v-if="displayDogAvailability">
-      <button v-on:click="displayMainViewDiv">Tagasi...</button>
     </div>
 
     <div v-if="displayReservationConfirmation">
@@ -89,11 +97,40 @@
       {{ reservationNumber }}
       <br>
       <br>
-      <button v-on:click="logOut">Logi välja</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="displayMainViewDiv">Tagasi pealehele...</button>
+      <br>
+      <br>
+      <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="logOut">Logi välja</button>
 
     </div>
 
-    <div>
+    <div v-if="displayAllUsersReservations">
+
+      <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="displayMainViewDiv">Tagasi...</button>
+      <br>
+      <br>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Koera nimi</th>
+          <th scope="col">Koera ID</th>
+          <th scope="col">Jalutuskäigu kuupäev</th>
+          <th scope="col">Algus</th>
+          <th scope="col">Lõpp</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="row in reservations">
+          <td>{{ row.dogName }}</td>
+          <td>{{ row.dogId }}</td>
+          <td>{{ row.date }}</td>
+          <td>{{ row.startTime }}</td>
+          <td>{{ row.endTime }}</td>
+
+        </tr>
+        </tbody>
+      </table>
+
     </div>
 
   </div>
@@ -116,9 +153,15 @@ export default {
       userId: sessionStorage.getItem('userId'),
       firstName: sessionStorage.getItem('firstName'),
       displayMainView: true,
-      displayDogAvailability: false,
+      displayDogSearch: false,
+      displayDogSearchResults: false,
+      displaySelectedDogData: false,
       displayReservationConfirmation: false,
-      displayAllUserReservations: false
+      displayAllUsersReservations: false,
+      reservations: {},
+      date: "",
+      startTime: "",
+      endTime: ""
 
     }
   },
@@ -132,7 +175,8 @@ export default {
       this.$http.post("/time/date", request)
           .then(response => {
             this.dogs = response.data
-            this.displayMainViewDiv()
+            this.displayDogSearch = false
+            this.displayDogSearchResults = true
             console.log(response.data)
           })
           .catch(error => {
@@ -142,9 +186,9 @@ export default {
     },
 
     selectDog: function (dog) {
-      this.hideAllDivs()
       this.dog = dog
-      this.displayDogAvailability = true
+      this.displayDogSearchResults = false
+      this.displaySelectedDogData = true
     },
 
     reserveDog: function () {
@@ -159,7 +203,7 @@ export default {
       ).then(response => {
         alert("Koer jalutamiseks broneeritud." + response.data.reservationNumber)
         this.reservationNumber = response.data.reservationNumber
-        this.hideAllDivs()
+        this.displaySelectedDogData = false
         this.displayReservationConfirmation = true
         this.dogs = response.data
         console.log(response.data)
@@ -172,12 +216,23 @@ export default {
 
     displayMainViewDiv: function () {
       this.displayMainView = true
-      this.displayDogAvailability = false
+      this.displaySelectedDogData = false
+      this.displayAllUsersReservations = false
+      this.displayReservationConfirmation = false
+    },
+
+    displayDogsSearchDiv: function () {
+      this.hideAllDivs()
+      this.displayDogSearch = true
     },
 
     hideAllDivs: function () {
       this.displayMainView = false
-      this.displayDogAvailability = false
+      // this.displayDogSearch = false
+      // this.displayDogSearchResults = false
+      // this.displaySelectedDogData = false
+      // this.displayReservationConfirmation = false
+      // this.displayAllUsersReservations = false
 
     },
 
@@ -186,23 +241,22 @@ export default {
       this.$router.push({name: 'Login'})
     },
 
-  },
-
-  displayAllUserReservations: function () {
-    this.$http.get("/reserve/history", {
-          params: {
-            userId: this.userId
+    getAllUserReservations: function () {
+      this.$http.get("/reserve/history", {
+            params: {
+              userId: this.userId
+            }
           }
-        }
-    ).then(response => {
-      this.reservations = response.data
-      this.hideAllDivs()
-      console.log(response.data)
-    }).catch(error => {
-      console.log(error)
-    })
+      ).then(response => {
+        this.reservations = response.data
+        this.hideAllDivs()
+        this.displayAllUsersReservations = true
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   }
-
 
 }
 </script>
