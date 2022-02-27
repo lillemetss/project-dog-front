@@ -4,12 +4,11 @@
     <p>
     <p>Miljon Mukit MTÜ, registrikood 80006666</p>
       <p>Uus 12, Tallinn, 10111</p>
-      <p> Meiega saad kontakti läbi muki@miljon.mukit</p>
+      <p>Meiega saad kontakti läbi muki@miljon.mukti</p>
     <p><a href="https://goo.gl/maps/tW68aPZGmBAdvg7eA" target="blank" rel="noopener">Leia meid kaardilt</a>
     </p>
     <ul>
     </ul>
-
 <!--    <h3>Ecosystem</h3>-->
 <!--    <ul>-->
 <!--      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>-->

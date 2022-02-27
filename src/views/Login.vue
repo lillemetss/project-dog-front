@@ -8,7 +8,10 @@
     <br>
     <br>
     <button type="button" class="btn btn-outline-primary" v-on:click="login"> Sisesta</button>
-
+<!--   <div>-->
+<!--     <h4>Loo konto</h4>-->
+<!--     <input placeholder=""-->
+<!--   </div>-->
   </div>
 </template>
 

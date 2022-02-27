@@ -20,7 +20,7 @@
 
       <br>
       <h3> Siin saad broneerida uue aja koeraga jalutamiseks: </h3>
-      <input type=date min="2022-02-25" placeholder="Vali kuupäev" v-model="requiredDate">
+      <input type=date min="2022-02-28" placeholder="Vali kuupäev" v-model="requiredDate">
       <input placeholder="Algus kellaaeg" v-model="requiredStartTime">
       <input placeholder="Lõpu kellaaeg" v-model="requiredEndTime">
       <br>
