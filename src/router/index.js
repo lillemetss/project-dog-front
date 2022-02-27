@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from "@/views/Login";
 import ReserveDog from "@/views/ReserveDog";
+import Dogs from "@/views/Dogs";
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,10 @@ const routes = [
     path: '/bronn',
     name: 'ReserveDog',
     component: ReserveDog
+  },{
+    path: '/dogs',
+    name: 'Dogs',
+    component: Dogs
   },
   {
     path: '/about',

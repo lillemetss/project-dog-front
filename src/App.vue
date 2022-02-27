@@ -7,8 +7,9 @@
       |
 <!--      <router-link to="/bronn">Broneeri aeg</router-link>-->
 <!--      |-->
-      <router-link to="/about">Meist</router-link>
-      |
+      <router-link to="/about">Meist</router-link> |
+      <router-link to="/dogs">Koertest</router-link> |
+
     </nav>
     <router-view/>
 
@@ -22,7 +23,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /*background-color: mistyrose;*/
+  background-color: mistyrose;
 }
 
 nav {

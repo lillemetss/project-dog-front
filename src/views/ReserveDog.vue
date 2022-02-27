@@ -88,13 +88,13 @@
       <h2>Broneeringu kinnitus </h2>
       <br>
       <br>
-      Hea {{ firstName }}!
+      Hea {{firstName}}!
       <br>
       <br>
-      {{ dog.dogName }} ootab sind jalutama {{ requiredDate }} kell {{ requiredStartTime }}. Head jalutamist!
+      {{ dog.dogName }} ootab sind jalutama {{requiredDate}} kell {{requiredStartTime}}. Head jalutamist!
       <br>
       <br>
-      {{ reservationNumber }}
+      {{reservationNumber}}
       <br>
       <br>
       <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="displayMainViewDiv">Tagasi pealehele...</button>
@@ -130,9 +130,7 @@
         </tr>
         </tbody>
       </table>
-
     </div>
-
   </div>
 </template>
 
@@ -213,6 +211,10 @@ export default {
       })
 
     },
+    logOut() {
+      sessionStorage.clear()
+      this.$router.push({name:'Login'})
+    },
 
     displayMainViewDiv: function () {
       this.displayMainView = true
@@ -228,18 +230,9 @@ export default {
 
     hideAllDivs: function () {
       this.displayMainView = false
-      // this.displayDogSearch = false
-      // this.displayDogSearchResults = false
-      // this.displaySelectedDogData = false
-      // this.displayReservationConfirmation = false
-      // this.displayAllUsersReservations = false
 
     },
 
-    logOut: function () {
-      sessionStorage.clear()
-      this.$router.push({name: 'Login'})
-    },
 
     getAllUserReservations: function () {
       this.$http.get("/reserve/history", {
@@ -250,7 +243,7 @@ export default {
       ).then(response => {
         this.reservations = response.data
         this.hideAllDivs()
-        this.displayAllUsersReservations = true
+        this.displayAllUsersReservations = false
         console.log(response.data)
       }).catch(error => {
         console.log(error)
