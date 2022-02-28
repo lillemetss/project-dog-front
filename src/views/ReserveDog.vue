@@ -243,7 +243,7 @@ export default {
       ).then(response => {
         this.reservations = response.data
         this.hideAllDivs()
-        this.displayAllUsersReservations = false
+        this.displayAllUsersReservations = true
         console.log(response.data)
       }).catch(error => {
         console.log(error)
