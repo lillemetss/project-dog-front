@@ -15,8 +15,8 @@
 
     </div>
     <div v-if="displayDogsInfoView">
-      <h4></h4>
       <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="displayMainViewDiv">Tagasi...</button>
+      <br>
       <br>
 
       <table class="table table-hover">
@@ -40,12 +40,15 @@
     </div>
     <div v-if="displaySelectedDogData">
 
+      <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="displayMainViewDiv">Tagasi...</button>
+
+      <br>
+      <br>
       <h3>{{dog.dogName}}</h3>
 
       <table class="table table-hover">
         <thead>
         <tr>
-          <th scope="col">Iseloomulikud jooned</th>
         </tr>
         </thead>
         <tbody>
@@ -55,6 +58,10 @@
         </tbody>
       </table>
 
+      <h3>Teiste jalutajate tagasiside {{dog.dogName}} kohta:</h3>
+      <br>
+
+      {{review}}
 
 
     </div>
@@ -76,7 +83,8 @@ export default {
       characteristicTag: "",
       displayMainView: true,
       displayDogsInfoView: false,
-      displaySelectedDogData: false
+      displaySelectedDogData: false,
+      review: {}
 
     }
   },
@@ -96,15 +104,31 @@ export default {
       })
     },
 
+    getDogReview: function () {
+      this.$http.get("/dog/review", {
+            params: {
+              dogId: this.dog.dogId
+            }
+          }
+      ).then(response => {
+        this.review = response.data.reviewReviewDescription
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
     selectDog: function (dog) {
       this.dog = dog
       this.displayDogsInfoView = false
       this.getDogsInfo()
+      this.getDogReview()
     },
 
     displayMainViewDiv: function () {
       this.displayMainView = true
       this.displayDogsInfoView = false
+      this.displaySelectedDogData = false
 
     },
 
@@ -115,10 +139,6 @@ export default {
 
     hideAllDivs: function () {
       this.displayMainView = false
-
-    },
-
-    displayGetDogsInfo: function () {
 
     },
 
